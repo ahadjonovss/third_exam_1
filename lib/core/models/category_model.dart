@@ -1,4 +1,4 @@
-class Category {
+class AppCategory {
   // "id":1,
   // "name":"Computers",
   // "image_url":"https://www.microsoft.com/en-us/microsoft-365/blog/wp-content/uploads/sites/2/2020/05/Dell-1.png",
@@ -9,15 +9,15 @@ class Category {
   String image_url;
   String created_at;
 
-  Category(
+  AppCategory(
       {required this.name,
       required this.id,
       required this.created_at,
       required this.image_url});
 
-  factory Category.fromJSon(Map<String,dynamic> json){
+  factory AppCategory.fromJSon(Map<String,dynamic> json){
 
-    return Category(
+    return AppCategory(
         name: json["name"]??"No name",
         id: json["id"]??0,
         created_at: json['created_at']??"no data",
