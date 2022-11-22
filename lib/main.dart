@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       builder: (BuildContext context, Widget? child) {
         return  MaterialApp(
           debugShowCheckedModeBanner: false,
-          initialRoute: RouteName.main,
+          initialRoute: RouteName.splash_page,
           onGenerateRoute: AppRoutes.generateRoutes,
           title: 'Shop',
           theme: ThemeData(

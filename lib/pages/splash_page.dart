@@ -13,9 +13,10 @@ class SplashPage extends StatelessWidget {
   Widget build(BuildContext context) {
     Future.delayed(Duration(seconds: 3)).then((value) => LocalDatabase.getList().then((value) => Navigator.pushNamedAndRemoveUntil(context, RouteName.main, (route) => false)));
     return Scaffold(
+      backgroundColor: Colors.blue,
       body: SafeArea(
         child: Center(
-          child: Text("Nimadir"),
+          child: Text("MyExam",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w600,fontSize: 45),),
         ),
       ),
     );
