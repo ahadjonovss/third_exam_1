@@ -2,7 +2,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:third_exam_1/core/models/product_model.dart';
 
 class LocalDatabase{
-  static String tablename="";
+  static String tablename="myCart";
   static LocalDatabase getInstance=LocalDatabase._init();
 
   Database? _database;
@@ -31,8 +31,9 @@ class LocalDatabase{
           String boolType = "INTEGER";
           await db.execute('''
       Create table $tablename(
-            databaseid $idType,
-            id $intType
+            _id $idType,
+            id $intType,
+            count $intType,
             category_id $intType,
             name $textType,
             price $intType,
@@ -42,6 +43,7 @@ class LocalDatabase{
       ''');
         }
     );
+    print("Database yaratildi");
     return database;
   }
 
@@ -58,8 +60,10 @@ class LocalDatabase{
   static Future<List<Product>> getList() async {
     var database = await getInstance.getDb();
     var listOfTodos = await database.query(tablename, columns: [
+      "_id",
+      "count",
+      "category_id",
       "id" ,
-      "category_id" ,
       "name" ,
       "price" ,
       "image_url" ,
@@ -76,11 +80,11 @@ class LocalDatabase{
     int id = await database.update(
       tablename,
       product.toJson(),
-      where: 'id = ?',
-      whereArgs: [product.id],
+      where: 'name = ?',
+      whereArgs: [product.name],
     );
     print("HAMMASI YAXSHI");
-    return product.copyWith(id: id);
+    return product.copyWith(databaseid: id);
   }
 
   static Future<int> deleteTaskById(int id) async {

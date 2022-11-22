@@ -7,8 +7,9 @@ import '../../../core/constants/mediaquares.dart';
 import '../../../core/models/product_model.dart';
 
 class productItemWidget extends StatefulWidget {
+  VoidCallback ondeletd;
   Product product;
-  productItemWidget({required this.product,Key? key}) : super(key: key);
+  productItemWidget({required this.product,required this.ondeletd,Key? key}) : super(key: key);
 
   @override
   State<productItemWidget> createState() => _productItemWidgetState();
@@ -49,7 +50,18 @@ class _productItemWidgetState extends State<productItemWidget> {
           Center(child: Text("USD ${widget.product.price}",style: TextStyle(color: Colors.purple,fontWeight: FontWeight.w600,fontSize: 18.sp),)),
           InkWell(
             onTap: () async {
-              await LocalDatabase.insertToDatabase(widget.product);
+              if(widget.product.count==0){
+                widget.product.count+=1;
+                await LocalDatabase.insertToDatabase(widget.product);
+              }
+              else{
+                await LocalDatabase.deleteTaskById(widget.product.id);
+                widget.product.count+=1;
+                await LocalDatabase.insertToDatabase(widget.product);
+
+              }
+
+
             },
             child: Container(
               height: 32.h,

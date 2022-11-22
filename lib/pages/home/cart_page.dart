@@ -19,14 +19,27 @@ class _CartPageState extends State<CartPage> {
       body: FutureBuilder(
         future: LocalDatabase.getList(),
         builder: (context, snapshot) {
+          if(snapshot.hasError){
+            return Container(
+              child: Center(
+                child: Text(snapshot.error.toString()),
+              ),
+            );
+          }
           if(snapshot.hasData){
+            List products=snapshot.data!;
             return Column(
               children: [
-                ListView.builder(
-                  itemCount: snapshot.data!.length,
-                  itemBuilder: (context, index) {
-                    return cartItemWidget();
-                  },)
+                Expanded(
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (context, index) {
+                      return cartItemWidget(product: products[index],ondeletd: (){setState(() {
+
+                      });},);
+                    },),
+                )
               ],
             );
           }

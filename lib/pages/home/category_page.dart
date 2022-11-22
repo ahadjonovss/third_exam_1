@@ -29,7 +29,9 @@ class _CategoryPageState extends State<CategoryPage> {
             List products=snapshot.data!;
             return Container(
               padding: EdgeInsets.all(12),
-              child: Expanded(
+              child: Container(
+                height: m_h(context)*1,
+                width: m_w(context)*1,
                 child: GridView.builder(
                   physics: const BouncingScrollPhysics(),
                   shrinkWrap: true,
@@ -40,7 +42,9 @@ class _CategoryPageState extends State<CategoryPage> {
                       mainAxisSpacing: 12,
                       crossAxisSpacing: 12
                   ),
-                  itemBuilder: (context, index) => productItemWidget(product:products[index]),
+                  itemBuilder: (context, index) => productItemWidget(product:products[index],ondeletd: (){setState(() {
+
+                  });}),
 
                 ),
               ),

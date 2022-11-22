@@ -1,11 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:third_exam_1/core/models/product_model.dart';
+import 'package:third_exam_1/database/database.dart';
 
 import '../../../core/constants/mediaquares.dart';
 
 class cartItemWidget extends StatelessWidget {
-  const cartItemWidget({Key? key}) : super(key: key);
+  VoidCallback ondeletd;
+  Product product;
+   cartItemWidget({required this.product,required this.ondeletd,Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,16 +24,24 @@ class cartItemWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('MacBook',style: TextStyle(fontSize: 16.sp),),
-              Text("Mahsulotla soni : 1 x 1200",style: TextStyle(color: Colors.purple,fontSize: 14),)
+              Text(product.name,style: TextStyle(fontSize: 16.sp),),
+              Text("Mahsulotla soni : ${product.count} x ${product.price}",style: TextStyle(color: Colors.purple,fontSize: 14),)
             ],
           ),
           Container(
             height: 60,
             width: 50,
-            color: Colors.red,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: NetworkImage(product.image_url),
+                fit: BoxFit.cover
+              )
+            ),
           ),
-          IconButton(onPressed: (){}, icon: Icon(Icons.delete,color: Colors.red,size: 32,))
+          IconButton(onPressed: () async {
+            await LocalDatabase.deleteTaskById(product.id);
+            ondeletd;
+          }, icon: Icon(Icons.delete,color: Colors.red,size: 32,))
         ],
       ),
     );

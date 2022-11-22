@@ -7,6 +7,8 @@ class Product {
   // "description":"Bu description bo'ladi"
 
   int id;
+  int count=0;
+  int? databaseid;
   int category_id;
   String name;
   num price;
@@ -14,7 +16,10 @@ class Product {
   String description;
 
   Product(
-      {required this.image_url,
+      {
+        this.count=0,
+        this.databaseid,
+        required this.image_url,
       required this.id,
       required this.name,
       required this.description,
@@ -23,6 +28,7 @@ class Product {
 
   factory Product.fromJson(Map<String, dynamic> json) {
     return Product(
+      count: json['count']??0,
       image_url: json["image_url"] ?? "",
       id: json['id'] ?? 0,
       name: json['name'] ?? "No name",
@@ -34,6 +40,9 @@ class Product {
 
   Map<String,dynamic> toJson() {
     return {
+      "_id":this.databaseid,
+      "count":this.count,
+      "category_id" : this.category_id,
       "id": this.id,
       "price": this.price,
       "description": this.description,
@@ -44,6 +53,8 @@ class Product {
 
   Product copyWith({
     int? id,
+    int? count,
+    int? databaseid,
     int? category_id,
     String? name,
     num? price,
@@ -51,6 +62,8 @@ class Product {
     String? description,
   })=>
       Product(
+        count: count??this.count,
+        databaseid: databaseid??this.databaseid,
         id: id ?? this.id,
         image_url: image_url??this.image_url,
         description: description??this.description,
