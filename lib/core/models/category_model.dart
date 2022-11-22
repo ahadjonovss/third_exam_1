@@ -14,4 +14,14 @@ class Category {
       required this.id,
       required this.created_at,
       required this.image_url});
+
+  factory Category.fromJSon(Map<String,dynamic> json){
+
+    return Category(
+        name: json["name"]??"No name",
+        id: json["id"]??0,
+        created_at: json['created_at']??"no data",
+        image_url: json["image_url"]??"");
+  }
+
 }
