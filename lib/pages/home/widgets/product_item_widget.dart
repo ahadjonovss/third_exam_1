@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:third_exam_1/database/database.dart';
 
 import '../../../core/constants/mediaquares.dart';
 import '../../../core/models/product_model.dart';
@@ -46,15 +47,20 @@ class _productItemWidgetState extends State<productItemWidget> {
               style: TextStyle(fontSize: 20.sp,fontWeight: FontWeight.w600),),
           ),
           Center(child: Text("USD ${widget.product.price}",style: TextStyle(color: Colors.purple,fontWeight: FontWeight.w600,fontSize: 18.sp),)),
-          Container(
-            height: 32.h,
-            width: 140.w,
-            decoration: BoxDecoration(
-              color: Colors.black,
-              borderRadius: BorderRadius.circular(4).r,
-            ),
-            child: const Center(
-              child: Text("Savatga qo'shish",style: TextStyle(color: Colors.white),),
+          InkWell(
+            onTap: () async {
+              await LocalDatabase.insertToDatabase(widget.product);
+            },
+            child: Container(
+              height: 32.h,
+              width: 140.w,
+              decoration: BoxDecoration(
+                color: Colors.black,
+                borderRadius: BorderRadius.circular(4).r,
+              ),
+              child: const Center(
+                child: Text("Savatga qo'shish",style: TextStyle(color: Colors.white),),
+              ),
             ),
           )
         ],

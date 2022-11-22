@@ -32,13 +32,31 @@ class Product {
     );
   }
 
-  Map toJson(Product product) {
+  Map<String,dynamic> toJson() {
     return {
-      id: product.id,
-      price: product.price,
-      description: product.description,
-      name: product.name,
-      image_url: product.image_url,
+      "id": this.id,
+      "price": this.price,
+      "description": this.description,
+      "name": this.name,
+      "image_url": this.image_url,
     };
   }
+
+  Product copyWith({
+    int? id,
+    int? category_id,
+    String? name,
+    num? price,
+    String? image_url,
+    String? description,
+  })=>
+      Product(
+        id: id ?? this.id,
+        image_url: image_url??this.image_url,
+        description: description??this.description,
+        price: price??this.price,
+        category_id: category_id??this.category_id,
+        name: name??this.name,
+
+      );
 }

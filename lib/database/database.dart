@@ -1,4 +1,5 @@
 import 'package:sqflite/sqflite.dart';
+import 'package:third_exam_1/core/models/product_model.dart';
 
 class LocalDatabase{
   static String tablename="";
@@ -16,6 +17,7 @@ class LocalDatabase{
     return _database!;
   }
 
+
   Future <Database> _initDb(String fileName) async{
     var dbPath=await getDatabasesPath();
     String path=dbPath+fileName;
@@ -29,14 +31,13 @@ class LocalDatabase{
           String boolType = "INTEGER";
           await db.execute('''
       Create table $tablename(
-            id $idType,
-            title $textType, 
-            description $textType, 
-            date $textType,
-            priority $intType,
-            isCompleted $boolType,
-            time $textType,
-            category $textType
+            databaseid $idType,
+            id $intType
+            category_id $intType,
+            name $textType,
+            price $intType,
+            image_url $textType,
+            description $textType
       )
       ''');
         }
@@ -45,45 +46,41 @@ class LocalDatabase{
   }
 
 
-  static Future<Task> insertToDatabase(Task newTodo) async {
+  static Future<Product> insertToDatabase(Product product) async {
     var database = await getInstance.getDb();
-    int id = await database.insert(tablename, newTodo.toJson());
+    int id = await database.insert(tablename, product.toJson());
     print("HAMMASI YAXSHI");
-    return newTodo.copyWith(id: id);
+    return product.copyWith(id: id);
 
 
   }
 
-  static Future<List<Task>> getList() async {
+  static Future<List<Product>> getList() async {
     var database = await getInstance.getDb();
     var listOfTodos = await database.query(tablename, columns: [
-      'id',
-      'title',
-      'description',
-      'date' ,
-      'priority' ,
-      'isCompleted' ,
-      'time' ,
-      'category'
+      "id" ,
+      "category_id" ,
+      "name" ,
+      "price" ,
+      "image_url" ,
+      "description"
     ]);
-    List <Task> list =listOfTodos.map((e) => Task.fromJson(e)).toList();
+    List <Product> list =listOfTodos.map((e) => Product.fromJson(e)).toList();
 
 
     return list;
   }
 
-  static Future<Task> updateTaskById(Task updatedTask) async {
+  static Future<Product> updateTaskById(Product product) async {
     var database = await getInstance.getDb();
     int id = await database.update(
       tablename,
-      updatedTask.toJson(),
+      product.toJson(),
       where: 'id = ?',
-      whereArgs: [updatedTask.id],
+      whereArgs: [product.id],
     );
-    print(updatedTask.id);
-    print(updatedTask.isComplated);
     print("HAMMASI YAXSHI");
-    return updatedTask.copyWith(id: id);
+    return product.copyWith(id: id);
   }
 
   static Future<int> deleteTaskById(int id) async {
@@ -95,37 +92,4 @@ class LocalDatabase{
     );
   }
 
-  static Future<List<Task>> getTaskIsCompleted(int isCompleted,
-      {String title = ''}) async {
-    var database = await getInstance.getDb();
-
-    if (title.isNotEmpty) {
-      var listOfTodos = await database.query(
-        tablename,
-        where: 'title LIKE ? AND isCompleted = ?',
-        whereArgs: ['%$title%', '$isCompleted'],
-      );
-      var list = listOfTodos.map((e) => Task.fromJson(e)).toList();
-      return list;
-    } else {
-      var listOfTodos = await database.query(tablename,
-          columns: [
-            'id',
-            'title',
-            'description',
-            'date' ,
-            'priority' ,
-            'isCompleted' ,
-            'time' ,
-            'category'
-          ],
-          where: 'isCompleted = ?',
-          whereArgs: ['$isCompleted']);
-
-      var list = listOfTodos.map((e) => Task.fromJson(e)).toList();
-
-      await Future.delayed(Duration(seconds: 4));
-      return list;
-    }
-  }
 }
