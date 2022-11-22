@@ -95,5 +95,11 @@ class LocalDatabase{
       whereArgs: [id],
     );
   }
+  static Future<int> deleteAll() async {
+    var database = await getInstance.getDb();
+    return await database.delete(
+      tablename,
+    );
+  }
 
 }

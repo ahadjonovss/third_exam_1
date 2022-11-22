@@ -38,8 +38,10 @@ class cartItemWidget extends StatelessWidget {
               )
             ),
           ),
-          IconButton(onPressed: () async {
+          IconButton(
+              onPressed: () async {
             await LocalDatabase.deleteTaskById(product.id);
+            ondeletd;
             ondeletd;
           }, icon: Icon(Icons.delete,color: Colors.red,size: 32,))
         ],
