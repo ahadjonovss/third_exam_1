@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:third_exam_1/core/models/category_model.dart';
 import 'package:third_exam_1/pages/home/cart_page.dart';
 import 'package:third_exam_1/pages/home/category_page.dart';
 import 'package:third_exam_1/pages/home/home_page.dart';
@@ -24,7 +25,7 @@ class AppRoutes{
       case RouteName.home: return MaterialPageRoute(builder: (_)=>HomePage());
       case RouteName.main: return MaterialPageRoute(builder: (_)=>MainPage());
       case RouteName.cart: return MaterialPageRoute(builder: (_)=>CartPage());
-      case RouteName.category: return MaterialPageRoute(builder: (_)=>CategoryPage());
+      case RouteName.category: return MaterialPageRoute(builder: (_)=>CategoryPage(appCategory: args as AppCategory,));
 
       default: return MaterialPageRoute(builder: (_)=>Scaffold());
     }

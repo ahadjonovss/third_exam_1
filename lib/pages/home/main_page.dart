@@ -19,7 +19,7 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Kategoriyalar ro'yxati"),
+        title: Text(currentpage==0?"Kategoriyalar ro'yxati":"Savatcha"),
       ),
       body: pages[currentpage],
       bottomNavigationBar: BottomNavigationBar(

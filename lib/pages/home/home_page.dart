@@ -20,11 +20,13 @@ class _HomePageState extends State<HomePage> {
         future: getCategory(),
        builder: (context, snapshot) {
          if(snapshot.hasData){
+           List categories=snapshot.data!;
            return Container(
                padding: const EdgeInsets.all(12).r,
                child: ListView.builder(
-                 itemBuilder: (context, index) => categoryItemWidget(),
-                 itemCount: 5,
+                 physics: const BouncingScrollPhysics(),
+                 itemBuilder: (context, index) => categoryItemWidget(appCategory: categories[index]),
+                 itemCount: categories.length,
                )
            );
          }
