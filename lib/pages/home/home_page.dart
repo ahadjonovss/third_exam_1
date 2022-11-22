@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:third_exam_1/core/constants/mediaquares.dart';
 import 'package:third_exam_1/pages/home/widgets/category_item.dart';
+import 'package:third_exam_1/service/category_service.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -16,6 +17,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: FutureBuilder(
+        future: getCategory(),
        builder: (context, snapshot) {
          if(snapshot.hasData){
            return Container(
@@ -24,6 +26,14 @@ class _HomePageState extends State<HomePage> {
                  itemBuilder: (context, index) => categoryItemWidget(),
                  itemCount: 5,
                )
+           );
+         }
+
+         if(snapshot.hasError){
+           return Container(
+             child: Center(
+               child: Text(snapshot.error.toString()),
+             ),
            );
          }
          return Container();
