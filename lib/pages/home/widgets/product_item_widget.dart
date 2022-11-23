@@ -65,6 +65,7 @@ class _productItemWidgetState extends State<productItemWidget> {
               }
               if(isHas==false){
                 if(widget.product.count==0){
+                  cart_items.add(widget.product);
                   widget.product.count+=1;
                   await LocalDatabase.insertToDatabase(widget.product);
                 }
